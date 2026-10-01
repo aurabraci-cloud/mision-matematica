@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1e1b4b">
+  <title>Misión Matemática — La Aventura del Explorador Numérico</title>
+  
+  <!-- Tipografía amigable y legible para niños -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Hojas de Estilo Modulares -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="theme-space">
+  <!-- Canvas de partículas y confeti para celebraciones -->
+  <canvas id="fx-canvas" class="fx-canvas" aria-hidden="true"></canvas>
+
+  <div id="app" class="app-container">
+    <!-- Header Global del Videojuego -->
+    <header id="global-header" class="global-header hidden">
+      <div class="header-left">
+        <button id="btn-back-map" class="btn-icon-bubble" title="Volver al Mapa" aria-label="Volver al Mapa">
+          🗺️ <span class="btn-text-desktop">Mapa</span>
+        </button>
+        <div class="player-pill" id="player-profile-pill" role="button" tabindex="0" title="Ver Perfil y Trofeos">
+          <span class="player-avatar-badge" id="header-avatar">🚀</span>
+          <div class="player-info-compact">
+            <span class="player-name" id="header-player-name">Explorador</span>
+            <span class="player-rank" id="header-player-rank">Nivel 1</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <!-- Barra de Nivel & XP -->
+        <div class="xp-container" title="Tu Experiencia Matemática">
+          <div class="xp-labels">
+            <span class="xp-title">⚡ XP</span>
+            <span class="xp-values"><span id="header-xp-current">0</span> / <span id="header-xp-next">100</span></span>
+          </div>
+          <div class="xp-bar-bg" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="xp-bar-fill" id="header-xp-bar" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Racha de Aciertos -->
+        <div class="stat-bubble streak-bubble" id="header-streak-container" title="Racha de aciertos">
+          <span class="flame-icon">🔥</span>
+          <span id="header-streak-count">0</span>
+        </div>
+
+        <!-- Monedas Mágicas -->
+        <div class="stat-bubble coins-bubble" title="Monedas de aventura">
+          <span>🪙</span>
+          <span id="header-coins-count">0</span>
+        </div>
+
+        <!-- Botón de Audio, Voz del Narrador y Salón de Trofeos -->
+        <button id="btn-sound-toggle" class="btn-icon-bubble" title="Activar/Silenciar Sonido" aria-label="Alternar Sonido">
+          <span id="sound-icon">🔊</span>
+        </button>
+        <button id="btn-voice-toggle" class="btn-icon-bubble" title="Voz del Narrador (Activar/Desactivar)" aria-label="Alternar Voz del Narrador">
+          <span id="voice-icon">🗣️</span>
+        </button>
+        <button id="btn-open-trophies" class="btn-icon-bubble" title="Salón de la Fama y Medallas" aria-label="Ver Medallas">
+          🏆
+        </button>
+      </div>
+    </header>
+
+    <!-- Contenedor de Pantallas Dinámicas -->
+    <main id="main-content" class="main-content">
+      <!-- PANTALLA 1: INICIO -->
+      <section id="screen-home" class="screen active">
+        <!-- Inyectado por screenHome.js -->
+      </section>
+
+      <!-- PANTALLA 2: MAPA DE AVENTURAS -->
+      <section id="screen-map" class="screen hidden">
+        <!-- Inyectado por screenMap.js -->
+      </section>
+
+      <!-- PANTALLA 3: SELECTOR DE MISIONES DE TERRITORIO -->
+      <section id="screen-territory" class="screen hidden">
+        <!-- Inyectado por screenMap.js -->
+      </section>
+
+      <!-- PANTALLA 4: ÁREA DE MISIÓN (DESCUBRE, ENTRENA, DESAFÍO) -->
+      <section id="screen-mission" class="screen hidden">
+        <!-- Inyectado por screenMission.js -->
+      </section>
+
+      <!-- PANTALLA 5: SALÓN DE LA FAMA Y PERFIL -->
+      <section id="screen-profile" class="screen hidden">
+        <!-- Inyectado por screenProfile.js -->
+      </section>
+
+      <!-- PANTALLA 6: RETOS ESPECIALES (CONTRARRELOJ / GUARDIÁN) -->
+      <section id="screen-special" class="screen hidden">
+        <!-- Inyectado por screenSpecial.js -->
+      </section>
+    </main>
+
+    <!-- Modal Global de Pistas Pedagógicas -->
+    <div id="modal-hint" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-hint-title">
+      <div class="modal-card bounce-in">
+        <div class="modal-header">
+          <div class="hint-header-icon">💡</div>
+          <h3 id="modal-hint-title" class="modal-title">Pista del Sabio Matemático</h3>
+          <button id="btn-close-hint" class="btn-close-modal" aria-label="Cerrar pista">✕</button>
+        </div>
+        <div id="modal-hint-body" class="modal-body">
+          <!-- Contenido de la pista -->
+        </div>
+        <div class="modal-footer">
+          <button id="btn-confirm-hint" class="btn-primary">¡Gracias, ya lo entiendo! 👍</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Celebración / Victoria de Misión -->
+    <div id="modal-victory" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="modal-card victory-card pop-in">
+        <div class="victory-banner" id="victory-banner-icon">🎉</div>
+        <h2 id="victory-title" class="victory-title">¡Misión Cumplida!</h2>
+        <p id="victory-subtitle" class="victory-subtitle">¡Has demostrado tu maestría matemática!</p>
+
+        <!-- Cristales o Medallas Nuevas -->
+        <div id="victory-rewards-showcase" class="rewards-showcase"></div>
+
+        <!-- Estadísticas de la misión -->
+        <div class="victory-stats-grid">
+          <div class="vstat-item">
+            <span class="vstat-label">⚡ Experiencia</span>
+            <span class="vstat-val" id="victory-xp">+100 XP</span>
+          </div>
+          <div class="vstat-item">
+            <span class="vstat-label">🪙 Monedas</span>
+            <span class="vstat-val" id="victory-coins">+25</span>
+          </div>
+          <div class="vstat-item">
+            <span class="vstat-label">🎯 Precisión</span>
+            <span class="vstat-val" id="victory-accuracy">100%</span>
+          </div>
+          <div class="vstat-item">
+            <span class="vstat-label">🔥 Racha Máxima</span>
+            <span class="vstat-val" id="victory-streak">5</span>
+          </div>
+        </div>
+
+        <div class="modal-footer victory-footer">
+          <button id="btn-victory-continue" class="btn-primary btn-sparkle">¡Continuar Aventura! 🚀</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notificaciones Toast para logros o rachas -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+  </div>
+
+  <!-- Scripts de la Aplicación -->
+  <script src="js/data/territories.js"></script>
+  <script src="js/data/badges.js"></script>
+  <script src="js/data/specialChallenges.js"></script>
+  <script src="js/data/missions.js"></script>
+  
+  <script src="js/engine/sound.js"></script>
+  <script src="js/engine/voice.js"></script>
+  <script src="js/engine/state.js"></script>
+  <script src="js/engine/gamification.js"></script>
+  <script src="js/engine/adaptive.js"></script>
+  <script src="js/engine/validator.js"></script>
+
+  <script src="js/ui/fx.js"></script>
+  <script src="js/ui/interactiveWidgets.js"></script>
+  <script src="js/ui/screenHome.js"></script>
+  <script src="js/ui/screenMap.js"></script>
+  <script src="js/ui/screenMission.js"></script>
+  <script src="js/ui/screenProfile.js"></script>
+  <script src="js/ui/screenSpecial.js"></script>
+  <script src="js/ui/router.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

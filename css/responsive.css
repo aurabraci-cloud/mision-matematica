@@ -1,0 +1,150 @@
+/* =========================================================
+   MISIÓN MATEMÁTICA — RESPONSIVE STYLESHEET
+   Móviles, Tablets y Adaptabilidad Táctil
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .global-header {
+    padding: 8px 12px;
+  }
+
+  .header-left {
+    gap: 8px;
+  }
+
+  .btn-text-desktop {
+    display: none;
+  }
+
+  .player-pill {
+    padding: 4px 8px;
+  }
+
+  .player-rank {
+    display: none;
+  }
+
+  .header-center {
+    max-width: 140px;
+    margin: 0 8px;
+  }
+
+  .xp-labels {
+    font-size: 0.65rem;
+  }
+
+  .header-right {
+    gap: 6px;
+  }
+
+  .stat-bubble {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+  }
+
+  .btn-icon-bubble {
+    padding: 4px 8px;
+    font-size: 1rem;
+  }
+
+  .screen {
+    padding: 14px 10px;
+  }
+
+  .phase-card {
+    padding: 20px 16px;
+  }
+
+  .choices-grid {
+    gap: 10px;
+  }
+
+  .choice-btn {
+    padding: 14px;
+    font-size: 1.5rem;
+    min-height: 64px;
+  }
+
+  .territories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-header-card {
+    padding: 18px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mission-row-card {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mission-row-card .btn-primary {
+    width: 100%;
+  }
+
+  .crystals-belt {
+    flex-wrap: wrap;
+    border-radius: var(--radius-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .home-title {
+    font-size: 2.2rem;
+  }
+
+  .home-subtitle {
+    font-size: 1rem;
+  }
+
+  .choices-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .math-equation-display {
+    font-size: 2.2rem;
+    padding: 12px 14px;
+    gap: 8px;
+  }
+
+  .numpad-key {
+    font-size: 1.5rem;
+    padding: 10px;
+  }
+
+  .exercise-bottom-actions {
+    flex-direction: column-reverse;
+  }
+
+  .exercise-bottom-actions button {
+    width: 100%;
+  }
+
+  .phase-steps-indicator {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .victory-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Modo Accesibilidad: Reducción de Movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .fx-canvas {
+    display: none !important;
+  }
+}

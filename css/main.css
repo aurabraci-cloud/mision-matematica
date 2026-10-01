@@ -1,0 +1,340 @@
+/* =========================================================
+   MISIÓN MATEMÁTICA — MAIN STYLESHEET
+   Variables, Reset, Temas y Layout General
+   ========================================================= */
+
+:root {
+  /* Paleta Primaria - Aventura Cósmica Infantil */
+  --bg-space: #0c0f24;
+  --bg-surface: #171d3d;
+  --bg-card: #202752;
+  --bg-card-hover: #293268;
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --text-dim: #94a3b8;
+
+  /* Colores de Territorios */
+  --color-bosque: #10b981;
+  --color-bosque-dark: #059669;
+  --color-bosque-glow: rgba(16, 185, 129, 0.4);
+
+  --color-desierto: #f59e0b;
+  --color-desierto-dark: #d97706;
+  --color-desierto-glow: rgba(245, 158, 11, 0.4);
+
+  --color-planeta: #3b82f6;
+  --color-planeta-dark: #2563eb;
+  --color-planeta-glow: rgba(59, 130, 246, 0.4);
+
+  --color-castillo: #8b5cf6;
+  --color-castillo-dark: #7c3aed;
+  --color-castillo-glow: rgba(139, 92, 246, 0.4);
+
+  --color-templo: #ec4899;
+  --color-templo-dark: #db2777;
+  --color-templo-glow: rgba(236, 72, 153, 0.4);
+
+  /* Gamificación & Feedback */
+  --color-xp: #06b6d4;
+  --color-xp-dark: #0891b2;
+  --color-coin: #facc15;
+  --color-coin-dark: #eab308;
+  --color-fire: #ef4444;
+  --color-success: #22c55e;
+  --color-success-dark: #16a34a;
+  --color-warning: #f97316;
+  --color-hint: #eab308;
+  --color-danger: #f43f5e;
+
+  /* Tipografías */
+  --font-fun: 'Fredoka', cursive, system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+
+  /* Bordes & Sombras 3D Táctiles */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 25px rgba(255, 255, 255, 0.15);
+}
+
+/* Reset básico */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: var(--bg-space);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Fondo Cósmico Estrellado con Estilo Mágico */
+body.theme-space {
+  background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #0c0f24 85%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Canvas de Efectos (Confeti, Rayos, Estrellas) */
+.fx-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Contenedor Principal */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+
+/* Header Global Superior */
+.global-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(23, 29, 61, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.global-header.hidden {
+  display: none !important;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-center {
+  flex: 1;
+  max-width: 320px;
+  margin: 0 16px;
+}
+
+/* Píldora de Jugador / Perfil */
+.player-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  padding: 6px 14px 6px 8px;
+  border-radius: var(--radius-full);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.player-pill:hover, .player-pill:focus-visible {
+  transform: translateY(-2px);
+  background: var(--bg-card-hover);
+  border-color: var(--color-xp);
+  outline: none;
+}
+
+.player-avatar-badge {
+  font-size: 1.5rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+}
+
+.player-info-compact {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-name {
+  font-family: var(--font-fun);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+
+.player-rank {
+  font-size: 0.75rem;
+  color: var(--color-xp);
+  font-weight: 700;
+}
+
+/* Barra de Experiencia (XP) */
+.xp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.xp-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  font-family: var(--font-fun);
+}
+
+.xp-title {
+  color: var(--color-xp);
+  letter-spacing: 0.5px;
+}
+
+.xp-values {
+  color: var(--text-muted);
+}
+
+.xp-bar-bg {
+  width: 100%;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-xp), #38bdf8);
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 10px var(--color-xp);
+}
+
+/* Burbujas de Estadísticas (Racha, Monedas) */
+.stat-bubble {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-fun);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+.streak-bubble {
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ff8b7c;
+}
+
+.streak-bubble.active-streak {
+  border-color: var(--color-fire);
+  animation: pulse-glow 1.5s infinite alternate;
+}
+
+.coins-bubble {
+  border-color: rgba(250, 204, 21, 0.3);
+  color: #fef08a;
+}
+
+/* Botones Icono de Header */
+.btn-icon-bubble {
+  background: var(--bg-card);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  font-size: 1.15rem;
+  font-family: var(--font-fun);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-icon-bubble:hover {
+  transform: translateY(-2px);
+  background: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-icon-bubble:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Área de Pantallas */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.screen.hidden {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.screen.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Utilidades Comunes */
+.hidden {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
